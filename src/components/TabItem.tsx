@@ -5,7 +5,13 @@ import { Tab } from "@/hooks/useBrowserState";
 
 function getFaviconUrl(url: string): string {
   try {
-    if (!url || url === "petezah://newtab" || url === "about:blank" || url === "https://") {
+    if (
+      !url ||
+      url === "petezah://newtab" ||
+      url === "about:blank" ||
+      url === "https://" ||
+      url.startsWith("petezah://")
+    ) {
       return "";
     }
     const clean = url.startsWith("http") ? url : `https://${url}`;
@@ -27,16 +33,50 @@ interface TabItemProps {
 }
 
 const TabItem = forwardRef<HTMLDivElement, TabItemProps>(
-  ({ tab, isActive, isPinned, collapsed, onClick, onClose, onTogglePin, onToggleSplit }, ref) => {
+  (
+    {
+      tab,
+      isActive,
+      isPinned,
+      collapsed,
+      onClick,
+      onClose,
+      onTogglePin,
+      onToggleSplit,
+    },
+    ref,
+  ) => {
+    const petezahIcons: Record<string, string> = {
+      "petezah://newtab": "N",
+      "petezah://games": "G",
+      "petezah://ai": "AI",
+      "petezah://apps": "AP",
+      "petezah://music": "M",
+      "petezah://movies": "MV",
+      "petezah://gameviewer": "GV",
+      "petezah://settings": "S",
+      "petezah://account": "AC",
+      "petezah://changelog": "CL",
+      "petezah://feedback": "FB",
+    };
+
     const isNewTab =
       !tab.url ||
       tab.url === "petezah://newtab" ||
       tab.url === "about:blank" ||
-      tab.url === "https://";
+      tab.url === "https://" ||
+      tab.url.startsWith("petezah://");
+
+    const petezahIcon = tab.url ? petezahIcons[tab.url] : undefined;
 
     const faviconSrc = tab.favicon || getFaviconUrl(tab.url);
     const showFavicon = !isNewTab && !!faviconSrc;
-    const displayTitle = tab.title && tab.title !== "New Tab" ? tab.title : isNewTab ? "New Tab" : tab.url;
+    const displayTitle =
+      tab.title && tab.title !== "New Tab"
+        ? tab.title
+        : isNewTab
+          ? "New Tab"
+          : tab.url;
 
     if (collapsed) {
       return (
@@ -48,7 +88,9 @@ const TabItem = forwardRef<HTMLDivElement, TabItemProps>(
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={onClick}
             className={`relative w-8 h-8 rounded-xl flex items-center justify-center text-xs font-medium transition-all duration-150 ${
-              isActive ? "glass-heavy text-foreground" : "hover:bg-accent/50 text-foreground/60"
+              isActive
+                ? "glass-heavy text-foreground"
+                : "hover:bg-accent/50 text-foreground/60"
             }`}
             title={displayTitle}
           >
@@ -64,10 +106,14 @@ const TabItem = forwardRef<HTMLDivElement, TabItemProps>(
                 src={faviconSrc}
                 alt=""
                 className="relative z-10 w-4 h-4 rounded-sm"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
               />
             ) : (
-              <span className="relative z-10 text-[11px]">{displayTitle[0]?.toUpperCase()}</span>
+              <span className="text-[10px] font-medium text-foreground/60">
+                {petezahIcon ?? displayTitle[0]?.toUpperCase()}
+              </span>
             )}
           </motion.button>
         </div>
@@ -103,12 +149,14 @@ const TabItem = forwardRef<HTMLDivElement, TabItemProps>(
             <img
               src={faviconSrc}
               alt=""
-              className="w-3.5 h-3.5 rounded-sm"
-              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+              className="relative z-10 w-4 h-4 rounded-sm"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
             />
           ) : (
-            <span className="text-[10px] font-medium text-foreground/60">
-              {displayTitle[0]?.toUpperCase()}
+            <span className="relative z-10 text-[11px]">
+              {petezahIcon ?? displayTitle[0]?.toUpperCase()}
             </span>
           )}
         </div>
@@ -122,26 +170,41 @@ const TabItem = forwardRef<HTMLDivElement, TabItemProps>(
         </span>
 
         {tab.pinned && (
-          <Pin size={9} className="text-foreground/30 flex-shrink-0 group-hover:hidden" />
+          <Pin
+            size={9}
+            className="text-foreground/30 flex-shrink-0 group-hover:hidden"
+          />
         )}
 
         <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
-            onClick={(e) => { e.stopPropagation(); onToggleSplit(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleSplit();
+            }}
             className="p-1 rounded-lg hover:bg-accent transition-colors"
             title="Split view"
           >
             <SplitSquareHorizontal size={11} className="text-foreground/50" />
           </button>
           <button
-            onClick={(e) => { e.stopPropagation(); onTogglePin(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onTogglePin();
+            }}
             className="p-1 rounded-lg hover:bg-accent transition-colors"
             title={tab.pinned ? "Unpin" : "Pin"}
           >
-            <Pin size={11} className={tab.pinned ? "text-foreground" : "text-foreground/50"} />
+            <Pin
+              size={11}
+              className={tab.pinned ? "text-foreground" : "text-foreground/50"}
+            />
           </button>
           <button
-            onClick={(e) => { e.stopPropagation(); onClose(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
             className="p-1 rounded-lg hover:bg-destructive/20 transition-colors"
             title="Close"
           >
@@ -150,7 +213,7 @@ const TabItem = forwardRef<HTMLDivElement, TabItemProps>(
         </div>
       </motion.div>
     );
-  }
+  },
 );
 
 TabItem.displayName = "TabItem";
