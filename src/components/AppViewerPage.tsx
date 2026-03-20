@@ -22,6 +22,16 @@ function ControlBtn({ onClick, children, title }: { onClick: () => void; childre
   );
 }
 
+const getEmbedUrl = (originalUrl: string, scramjet: any) => {
+  try {
+    const domain = new URL(originalUrl).hostname;
+    if (domain.includes('google.com')) return '/static/google-embed.html#google.com';
+    if (domain.includes('youtube.com')) return '/static/youtube-embed.html#youtube.com';
+    if (domain.includes('reddit.com')) return '/static/reddit-embed.html#reddit.com';
+  } catch { }
+  return scramjet.encodeUrl(originalUrl);
+};
+
 export default function AppViewerPage({ url, title, onBack }: AppViewerPageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -40,7 +50,7 @@ export default function AppViewerPage({ url, title, onBack }: AppViewerPageProps
       try {
         const scFrame = scramjet.createFrame();
         scFrame.frame.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:none;opacity:0;transition:opacity 0.25s ease;";
-        scFrame.frame.src = scramjet.encodeUrl(url);
+        scFrame.frame.src = getEmbedUrl(url, scramjet);
         scFrame.frame.onload = () => { scFrame.frame.style.opacity = "1"; };
         scramjetFrameRef.current = scFrame.frame;
         const wrapper = wrapperRef.current;
