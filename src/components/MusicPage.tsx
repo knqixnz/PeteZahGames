@@ -12,7 +12,7 @@ export default function MusicPage({ onNavigate }: { onNavigate: (url: string) =>
       if (!scramjet) return false;
       try {
         const scFrame = scramjet.createFrame();
-        scFrame.frame.src = scramjet.encodeUrl("https://monochrome.tf/");
+        scFrame.frame.src = scramjet.encodeUrl("https://monochrome.samidy.com/");
         scFrame.frame.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:none;";
         container.appendChild(scFrame.frame);
         return true;
