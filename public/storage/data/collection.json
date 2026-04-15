@@ -8,7 +8,7 @@
     },
     {
       "label": "1v1.LoL",
-      "imageUrl": "https://cdn.jsdelivr.net/gh/gn-math/covers@main/58.png",
+      "imageUrl": "/storage/ag/gn/covers/58.png",
       "url": "/iframe.html?url=/pages/other/interpreter/index.html?url=https://cdn.jsdelivr.net/gh/gn-math/html@main/58.html",
       "categories": []
     },
@@ -62,13 +62,13 @@
     },
     {
       "label": "Drive Mad",
-      "imageUrl": "https://cdn.jsdelivr.net/gh/gn-math/covers@main/35.png",
+      "imageUrl": "/storage/ag/gn/covers/35.png",
       "url": "/iframe.html?url=/pages/other/interpreter/index.html?url=https://cdn.jsdelivr.net/gh/gn-math/html@main/35.html",
       "categories": []
     },
     {
       "label": "Retro Bowl",
-      "imageUrl": "https://cdn.jsdelivr.net/gh/gn-math/covers@main/33.png",
+      "imageUrl": "/storage/ag/gn/covers/33.png",
       "url": "/iframe.html?url=/pages/other/interpreter/index.html?url=https://cdn.jsdelivr.net/gh/gn-math/html@main/33.html",
       "categories": []
     },
@@ -81,13 +81,13 @@
     {
       "label": "Five Nights at Epsteins",
       "url": "/iframe.html?url=/pages/other/interpreter/index.html?url=https://cdn.jsdelivr.net/gh/gn-math/html@main/710-fix.html",
-      "imageUrl": "https://cdn.jsdelivr.net/gh/gn-math/covers@main/710.png",
+      "imageUrl": "/storage/ag/gn/covers/710.png",
       "categories": ["skill", "strategy"]
     },
     {
       "label": "Buckshot Roulette",
       "url": "/iframe.html?url=/storage/ag/gn/205-f.html",
-      "imageUrl": "https://cdn.jsdelivr.net/gh/genizy/web-port@main/buckshot-roulette/buckshot-roulette.icon.png",
+      "imageUrl": "/storage/ag/gn/covers/205.png",
       "categories": ["skill", "strategy"]
     },
     {
@@ -107,7 +107,7 @@
     },
     {
       "label": "Bad Parenting 1",
-      "imageUrl": "https://cdn.jsdelivr.net/gh/gn-math/covers@main/166.png",
+      "imageUrl": "/storage/ag/gn/covers/166.png",
       "url": "/iframe.html?url=/pages/other/interpreter/index.html?url=https://cdn.jsdelivr.net/gh/gn-math/html@main/166.html",
       "featured": true,
       "categories": []
